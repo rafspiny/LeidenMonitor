@@ -1,6 +1,6 @@
-from data_storage import fetch_existing_codes_from_storage, store_vacancies_in_storage
-from email_provider import send_vacancies_via_email, MailEngine
-from logic import get_vacancies_from_website
+from data_layer.data_storage import fetch_existing_codes_from_storage, store_vacancies_in_storage
+from business.email_provider import send_vacancies_via_email, MailEngine
+from business.logic import get_vacancies_from_website
 
 
 mail_engine = MailEngine()

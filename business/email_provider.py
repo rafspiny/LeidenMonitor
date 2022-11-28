@@ -1,10 +1,10 @@
 from typing import List
 
-from models import Vacancy
-from secrets import MAILJET_API_KEY, MAILJET_API_SECRET
+from model.models import Vacancy
+from conf.secrets import MAILJET_API_KEY, MAILJET_API_SECRET
 
 from mailjet_rest import Client
-from email_config import NAME as recipient_name, EMAIL as recipient_email
+from conf.email_config import NAME as recipient_name, EMAIL as recipient_email
 
 EMAIL_TEMPLATE = f"""
 Hi {recipient_name},
@@ -22,9 +22,9 @@ Please review the latest opening position at the department of you choice of the
 class MailEngine:
     def __init__(self):
         try:
-            self.mailer = Client(auth=(MAILJET_API_KEY, MAILJET_API_SECRET), version='v3.1')
+            self.mailer = Client(auth=(MAILJET_API_KEY, MAILJET_API_SECRET), version="v3.1")
         except Exception as error:
-            print('An exception occurred: {}'.format(error))
+            print("An exception occurred: {}".format(error))
             raise error
 
     def send_email(self, message):
@@ -38,18 +38,18 @@ class MailEngine:
                 print(result.json())
                 raise Exception("Unable to send email")
         except Exception as error:
-            print('An exception occurred: {}'.format(error))
+            print("An exception occurred: {}".format(error))
 
 
 def _generate_html_list(vacancies: List[Vacancy]) -> str:
     return "<ul><br\>" + "<br/>".join(
-        [f"<li>{vacancy.title} available <a href='{vacancy.link}'>here</a> with code {vacancy.code}</li>" for vacancy in vacancies]
+        [f"<li>{vacancy.title} available <a href="{vacancy.link}">here</a> with code {vacancy.code}</li>" for vacancy in vacancies]
     ) + "</ul>"
 
 
 def send_vacancies_via_email(engine: MailEngine, vacancies: List[Vacancy]):
     data = {
-        'Messages': [
+        "Messages": [
             {
                 "From": {
                     "Email": "info@rafspiny.eu",

@@ -1,2 +1,0 @@
-MAILJET_API_KEY = 'xxx'
-MAILJET_API_SECRET = 'xxx'
